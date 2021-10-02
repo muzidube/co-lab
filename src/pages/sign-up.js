@@ -57,7 +57,7 @@ export default function SignUp() {
                 setError(error.message);          
             }
         } else {
-            setError('That username is already taken.')
+            setError('That username is already taken.'); 
         }
 
         /*try {
