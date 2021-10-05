@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 export default function PostContent({src, caption}) {
     return (
-        <img src = {src} aboutlt = {caption} />
+        <img src = {src} alt = {caption} />
     )
 };
 

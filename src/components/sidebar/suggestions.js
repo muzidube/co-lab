@@ -19,7 +19,6 @@ export default function Suggestions({ userId, following, loggedInUserDocId }) {
             suggestedProfiles()
         }
 
-        console.log('profiles', profiles)
     }, [userId])
 
     return !profiles? (
