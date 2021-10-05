@@ -1,3 +1,4 @@
+import { previousSaturday } from 'date-fns';
 import { firebase, FieldValue } from '../lib/firebase';
 
 export async function doesUsernameExist(username){
@@ -68,4 +69,32 @@ export async function updateFollowedUserFollowers(profileDocId, loggedInUserDocI
         : FieldValue.arrayUnion(loggedInUserDocId)
     });
     
+}
+
+export async function getPosts(userId, following) {
+    const result = await firebase
+    .firestore()
+    .collection('posts')
+    .where('userId', 'in', following)
+    .get();
+
+    const userFollowedPosts = result.docs.map((post) => ({
+        ...post.data(),
+        docId: post.id}))
+
+    const postWithUserDetails = await Promise.all(
+        userFollowedPosts.map(async (post) => {
+            let userLikedPost = false;
+            if (post.likes.includes(userId)) {
+                userLikedPost = true;
+            }
+            const user = await getUserByUserId(post.userId);
+            const { username } = user[0];
+            return { username, ... post, userLikedPost }
+
+        })
+    )
+
+    return postWithUserDetails;
+
 }

@@ -8,7 +8,7 @@ export function seedDatabase(firebase) {
         fullName: 'Muzi Dube',
         emailAddress: 'muzidube1@gmail.com',
         following: ['2'],
-        followers: ['2', '3', '4'],
+        followers: [],
         dateCreated: Date.now()
       },
       {
@@ -49,11 +49,11 @@ export function seedDatabase(firebase) {
     for (let i = 1; i <= 5; ++i) {
       firebase
         .firestore()
-        .collection('photos')
+        .collection('posts')
         .add({
-          photoId: i,
+          postId: i,
           userId: '2',
-          imageSrc: `/images/users/raphael/${i}.jpg`,
+          postSrc: `/images/users/raphael/${i}.jpg`,
           caption: 'Saint George and the Dragon',
           likes: [],
           comments: [
