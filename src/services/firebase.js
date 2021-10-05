@@ -21,9 +21,23 @@ export async function getUserByUserId(userId) {
 
     const user = result.docs.map((item) => ({
         ...item.data(),
-        docId: item.id
-
-    }))
+        docId: item.id}))
 
     return user;
+}
+
+export async function getSuggestedProfiles(userId, following) {
+    const result = await firebase
+        .firestore()
+        .collection('users')
+        .limit(10)
+        .get();
+
+    const suggestions = result.docs.map((user) => ({
+        ...user.data(),
+        docId: user.id}))
+        .filter((profile) => profile.userId !== userId && !following.includes(profile.userId));
+        
+    return suggestions
+    
 }
