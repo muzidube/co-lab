@@ -1,4 +1,3 @@
-import { previousSaturday } from 'date-fns';
 import { firebase, FieldValue } from '../lib/firebase';
 
 export async function doesUsernameExist(username){
@@ -9,6 +8,19 @@ export async function doesUsernameExist(username){
         .get();
 
         return result.docs.map((user) => user.data().length > 0);
+
+}
+
+export async function getUserByUsername(username){
+    const result = await firebase
+        .firestore()
+        .collection('users')
+        .where('username', '==', username)
+        .get();
+    
+        return result.docs.map((item) => ({
+                ...item.data(),
+                docId: item.id}))
 
 }
 
@@ -96,5 +108,21 @@ export async function getPosts(userId, following) {
     )
 
     return postWithUserDetails;
+
+}
+
+
+export async function getUserPostsByUserId(userId) {
+    const result = await firebase
+        .firestore()
+        .collection('posts')
+        .where('userId', '==', userId)
+        .get();
+
+    const posts = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id}))
+    
+    return posts
 
 }
