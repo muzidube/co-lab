@@ -1,7 +1,8 @@
 import { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Header from './header';
-import { getUserByUsername, getUserPostsByUserId } from '../../services/firebase';
+import Posts from './posts';
+import { getUserPostsByUserId } from '../../services/firebase';
 
 export default function Profile({user}) {
     const reducer = (state, newState) => ({...state, ...newState });
@@ -27,8 +28,13 @@ export default function Profile({user}) {
 
     return (
     <>
-        <Header />
-        <p>Hello {user.username}</p>
+        <Header 
+            postCount = {postCollection ? postCollection.length : 0}
+            profile = {profile}
+            followerCount = {followerCount}
+            setFollowerCount = {dispatch}
+        />
+        <Posts posts = {postCollection} />
     </>
     )
 }

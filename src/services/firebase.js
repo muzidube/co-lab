@@ -126,3 +126,36 @@ export async function getUserPostsByUserId(userId) {
     return posts
 
 }
+
+export async function isUserFollowingProfile(loggedInUserUsername, profileUserId) {
+    const result = await firebase
+        .firestore()
+        .collection('users')
+        .where('username', '==', loggedInUserUsername)
+        .where('following', 'array-contains', profileUserId)
+        .get();
+
+    const [response = {}] = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id}))
+    
+    return response.userId;
+}
+
+export async function toggleFollow(isFollowingProfile, 
+    activeUserDocId, 
+    profileDocId, 
+    profileUserId, 
+    followingUserId) 
+    {
+
+    // 1st parameter: my doc id
+    // 2nd parameter: person I am followings user id
+    // 3rd parameter: am i following that person (true/false)
+    await updateLoggedInUserFollowing(activeUserDocId, profileUserId, isFollowingProfile);
+
+    // 1st parameter: my user id
+    // 2nd parameter: person I am followings doc id
+    // 3rd parameter: am i following that person (true/false)
+    await updateFollowedUserFollowers(profileDocId, followingUserId, isFollowingProfile);
+}
