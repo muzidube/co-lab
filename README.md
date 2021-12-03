@@ -1,4 +1,4 @@
-# co-lab
+# Co-Lab
 
 Co-Lab is a music collaboration site. Being a musician (at a stretch) myself, I wanted a social media platform based around the idea of sharing music with like-minded people. 
 
