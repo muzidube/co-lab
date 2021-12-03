@@ -4,49 +4,47 @@ import Header from './header';
 import Posts from './posts';
 import { getUserPostsByUserId } from '../../services/firebase';
 
-export default function Profile({user}) {
-    const reducer = (state, newState) => ({...state, ...newState });
+export default function Profile({ user }) {
+  const reducer = (state, newState) => ({ ...state, ...newState });
 
-    const initialState = {
-        profile: {},
-        postCollection: [],
-        followerCount: 0
-    };
-    
-    const [{ profile, postCollection, followerCount }, dispatch] =
-    useReducer(reducer, initialState);
+  const initialState = {
+    profile: {},
+    postCollection: [],
+    followerCount: 0
+  };
 
-    useEffect(() => {
-        async function getProfileInfoAndPosts() {
-            const posts = await getUserPostsByUserId(user.userId);
-            dispatch({ profile: user, postCollection: posts, followerCount: user.followers.length});
-        }
+  const [{ profile, postCollection, followerCount }, dispatch] = useReducer(reducer, initialState);
 
-        getProfileInfoAndPosts();
+  useEffect(() => {
+    async function getProfileInfoAndPosts() {
+      const posts = await getUserPostsByUserId(user.userId);
+      dispatch({ profile: user, postCollection: posts, followerCount: user.followers.length });
+    }
 
-    },  [user.userId])
+    getProfileInfoAndPosts();
+  }, [user, user.userId]);
 
-    return (
+  return (
     <>
-        <Header 
-            postCount = {postCollection ? postCollection.length : 0}
-            profile = {profile}
-            followerCount = {followerCount}
-            setFollowerCount = {dispatch}
-        />
-        <Posts posts = {postCollection} />
+      <Header
+        postCount={postCollection ? postCollection.length : 0}
+        profile={profile}
+        followerCount={followerCount}
+        setFollowerCount={dispatch}
+      />
+      <Posts posts={postCollection} />
     </>
-    )
+  );
 }
 
 Profile.propTypes = {
-    user: PropTypes.shape({
-        dateCreated: PropTypes.number.isRequired,
-        emailAddress: PropTypes.string.isRequired,
-        followers: PropTypes.array.isRequired,
-        following: PropTypes.array.isRequired,
-        fullName: PropTypes.string.isRequired,
-        userId: PropTypes.string.isRequired,
-        username: PropTypes.string.isRequired
-    }).isRequired
-}
+  user: PropTypes.shape({
+    dateCreated: PropTypes.number.isRequired,
+    emailAddress: PropTypes.string.isRequired,
+    followers: PropTypes.array.isRequired,
+    following: PropTypes.array.isRequired,
+    fullName: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
+  }).isRequired
+};

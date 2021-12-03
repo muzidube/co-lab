@@ -1,29 +1,20 @@
 import { useState, useEffect, useContext } from 'react';
-import UserContext from '../context/user';
-import { getPosts, getUserByUserId } from '../services/firebase';
+import { getPosts } from '../services/firebase';
 
-export default function usePosts() {
-    const [posts, setPosts] = useState(null);
+export default function usePosts(user) {
+  const [posts, setPosts] = useState(null);
 
-    const {
-        user: { uid: userId = '' }
-     } = useContext(UserContext);
+  useEffect(() => {
+    async function getTimelinePosts() {
+      if (user?.following?.length > 0) {
+        const followedUserPosts = await getPosts(user.userId, user.following);
+        followedUserPosts.sort((a, b) => b.dateCreated - a.dateCreated);
+        setPosts(followedUserPosts);
+      }
+    }
 
-        useEffect(() => {
-            async function getTimelinePosts() {
-                const [{following}] = await getUserByUserId(userId);
-                let followedUserPosts = [];
+    getTimelinePosts();
+  }, [user?.userId]);
 
-                if (following.length > 0) {
-                    followedUserPosts = await getPosts(userId, following)
-                }
-
-                followedUserPosts.sort((a,b) => b.dateCreated - a.dateCreated);
-                setPosts(followedUserPosts);
-            }
-
-            getTimelinePosts();
-        }, [userId]);
-
-    return { posts };
+  return { posts };
 }
