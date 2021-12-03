@@ -76,6 +76,9 @@ export default function Header() {
                       className="rounded-full h-8 w-8 flex"
                       src={`/images/avatars/${user.username}.jpg`}
                       alt={`${user?.username} profile`}
+                      onError={(e) => (
+                        (e.target.onerror = null), (e.target.src = '/images/avatars/default.png')
+                      )}
                     />
                   </Link>
                 </div>

@@ -11,6 +11,9 @@ export default function Header({ username }) {
             className="rounded-full h-8 w-8 flex mr-3"
             src={`/images/avatars/${username}.jpg`}
             alt={`${username} profile picture`}
+            onError={(e) => (
+              (e.target.onerror = null), (e.target.src = '/images/avatars/default.png')
+            )}
           />
           <p className="font-bold">{username}</p>
         </Link>

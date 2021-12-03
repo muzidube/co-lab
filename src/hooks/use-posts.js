@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { getPosts } from '../services/firebase';
 
 export default function usePosts(user) {
@@ -14,7 +14,7 @@ export default function usePosts(user) {
     }
 
     getTimelinePosts();
-  }, [user?.userId]);
+  }, [user?.userId, user?.following]);
 
   return { posts };
 }
