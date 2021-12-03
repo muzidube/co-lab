@@ -42,6 +42,7 @@ module.exports = {
       spacing: {
         heroHeight: 'calc(100vh / 2.5)',
         '-999em': '-999em',
+        '2.5em': '2.5em',
         '2em': '2em',
         '1em': '1em',
         '33%': '33%',

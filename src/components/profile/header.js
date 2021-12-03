@@ -43,11 +43,11 @@ export default function Header({
   }, [user?.username, profileUserId]);
 
   return (
-    <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
+    <div className="grid grid-cols-3 gap-1 justify-between mx-auto max-w-screen-lg">
       <div className="container flex justify-center items-center">
         {profileUsername ? (
           <img
-            className="rounded-full h-40 w-40 flex"
+            className="rounded-full h-20 w-20 md:h-40 md:w-40 flex"
             src={`/images/avatars/${profileUsername}.jpg`}
             alt={`${user.username} profile pic`}
             onError={(e) => (
@@ -56,7 +56,7 @@ export default function Header({
           />
         ) : (
           <img
-            className="rounded-full h-40 w-40 flex"
+            className="rounded-full h-20 w-20 md:h-40 md:w-40 flex"
             src={'/images/avatars/default.png'}
             alt={'A profile thing'}
           />
@@ -80,27 +80,27 @@ export default function Header({
             </button>
           )}
         </div>
+        <div className="container mt-4">
+          <p className="font-medium">{!fullName ? <Skeleton count={1} height={24} /> : fullName}</p>
+        </div>
         <div className="container flex mt-4">
           {!followers || !following ? (
             <Skeleton count={1} width={677} height={24} />
           ) : (
             <>
-              <p className="mr-10">
+              <p className="mr-5">
                 <span className="font-bold">{postCount}</span> posts
               </p>
-              <p className="mr-10">
+              <p className="mr-5">
                 <span className="font-bold">{followerCount}</span>
                 {` `}
                 {followerCount === 1 ? `follower` : `followers`}
               </p>
-              <p className="mr-10">
+              <p className="mr-5">
                 <span className="font-bold">{following?.length}</span> following
               </p>
             </>
           )}
-        </div>
-        <div className="container mt-4">
-          <p className="font-medium">{!fullName ? <Skeleton count={1} height={24} /> : fullName}</p>
         </div>
       </div>
     </div>

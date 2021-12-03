@@ -28,15 +28,9 @@ export default function SignUp() {
           .auth()
           .createUserWithEmailAndPassword(emailAddress, password);
 
-        // authentication
-        // -> emailAddress & password & username (displayName)
-
         await createdUserResult.user.updateProfile({
           displayName: username
         });
-
-        // firebase
-        // -> user collection (create a document)
 
         await firebase.firestore().collection('users').add({
           userId: createdUserResult.user.uid,
@@ -58,28 +52,25 @@ export default function SignUp() {
     } else {
       setError('That username is already taken, please try another.');
     }
-
-    /*try {
- 
-        } catch (error) {
-
-        }*/
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-expressions
-    document.title - 'Sign Up - Co-Lab';
+    document.title = 'Sign Up - Co-Lab';
   }, []);
 
   return (
-    <div className="container flex mx-auto max-w-screen-lg items-center h-screen">
-      <div className="flex w-3/5 mr-5">
-        <img src="/images/co-lab login image.png" alt="iPhone with profile"></img>
+    <div className="container flex flex-col mx-auto max-w-screen-lg items-center h-screen justify-center">
+      <div className="flex w-300px md:w-2/5 mb-10">
+        <img
+          className="mx-auto w-300px md:w-500px"
+          src="/images/co-lab login image.png"
+          alt="iPhone with profile"
+        ></img>
       </div>
-      <div className="flex flex-col w-2/5">
+      <div className="flex flex-col w-4/5 md:w-2/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-          <h1 className="flex justify-center w-full mb-5">
-            <img src="/images/co-lab login logo.png" alt="Co-Lab" className="mt-2 w-6/12"></img>
+          <h1 className="flex justify-center w-full mb-4">
+            <img src="/images/co-lab logo.png" alt="Co-Lab" className="mt-2 w-6/12"></img>
           </h1>
 
           {error && <p className="mb-4 text-xs test-red-primary">{error}</p>}

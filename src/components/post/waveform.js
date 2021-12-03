@@ -34,7 +34,7 @@ export default function Waveform({ postId, track }) {
 
   const playButton = playing ? (
     <button
-      className={`play-button-${postId} flex content-center items-center w-12 h-12 bg-transparent rounded-50% border-none outline-none cursor-pointer mb-3`}
+      className={`play-button-${postId} flex content-center items-center w-12 h-12 bg-transparent rounded-50% border-none outline-none cursor-pointer mt-4`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ export default function Waveform({ postId, track }) {
     </button>
   ) : (
     <button
-      className={`play-button-${postId} flex content-center items-center w-12 h-12 bg-transparent rounded-50% border-none outline-none cursor-pointer mb-3`}
+      className={`play-button-${postId} flex content-center items-center w-12 h-12 bg-transparent rounded-50% border-none outline-none cursor-pointer mt-4`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function Waveform({ postId, track }) {
   );
 
   return (
-    <div className="waveform-container flex flex-row items-center content-center h-24 w-full bg-transparent px-4">
+    <div className="waveform-container flex flex-row items-center content-center h-16 w-full bg-transparent px-4">
       {playButton}
       <div className={`wave-${postId} w-full h-full ml-2`} id="waveform" />
     </div>
