@@ -109,6 +109,25 @@ export async function getPosts(userId, following) {
   return postWithUserDetails;
 }
 
+export async function getAllPosts() {
+  const result = await firebase.firestore().collection('posts').get();
+
+  const allPosts = result.docs.map((post) => ({
+    ...post.data(),
+    docId: post.id
+  }));
+
+  const postWithUserDetails = await Promise.all(
+    allPosts.map(async (post) => {
+      let userLikedPost = false;
+      const user = await getUserByUserId(post.userId);
+      const { username } = user[0];
+      return { username, ...post, userLikedPost };
+    })
+  );
+  return postWithUserDetails;
+}
+
 export async function getUserPostsByUserId(userId) {
   const result = await firebase.firestore().collection('posts').where('userId', '==', userId).get();
 

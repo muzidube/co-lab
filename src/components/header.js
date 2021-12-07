@@ -5,11 +5,12 @@ import UserContext from '../context/user';
 import * as ROUTES from '../constants/routes';
 import useUser from '../hooks/use-user';
 
-export default function Header() {
+export default function Header({ anon }) {
   const { user: loggedInUser } = useContext(UserContext);
   const { user } = useUser(loggedInUser?.uid);
   const { firebase } = useContext(FirebaseContext);
   const history = useHistory();
+  console.log('anon: ', anon);
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
@@ -22,6 +23,13 @@ export default function Header() {
               </Link>
             </h1>
           </div>
+          {anon ? (
+            <div className="anon-message h-full flex items-center">
+              <h1>You are a logged in as a guest.</h1>
+            </div>
+          ) : (
+            ''
+          )}
           <div className="text-gray-700 text-center flex items-center align-items">
             {loggedInUser ? (
               <>

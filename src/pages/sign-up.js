@@ -54,6 +54,19 @@ export default function SignUp() {
     }
   };
 
+  const guestLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      await firebase.auth().signInAnonymously();
+      history.push(ROUTES.DASHBOARD);
+    } catch (error) {
+      setEmailAddress('');
+      setPassword('');
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     document.title = 'Sign Up - Co-Lab';
   }, []);
@@ -111,10 +124,17 @@ export default function SignUp() {
             <button
               disabled={isInvalid}
               type="submit"
-              className={`bg-orange-medium text-white w-full rounded h-8 font-bold
+              className={`bg-orange-medium text-white w-full rounded h-8 font-bold mb-3
                                 ${isInvalid && 'opacity-50'}`}
             >
               Sign Up
+            </button>
+            <button
+              type="submit"
+              className="bg-green-medium text-white w-full rounded h-8 font-bold"
+              onClick={guestLogin}
+            >
+              Try As Guest
             </button>
           </form>
         </div>
