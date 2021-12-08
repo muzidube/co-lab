@@ -1,17 +1,10 @@
 import { useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { getAllPosts } from '../services/firebase';
+import usePosts from '../hooks/use-guest-posts';
 import Post from './post';
 
 export default function GuestTimeline() {
-  const [posts, setPosts] = useState('');
-
-  const fetchPosts = async () => {
-    await getAllPosts()
-      .then((res) => res.sort((a, b) => parseFloat(b.dateCreated) - parseFloat(a.dateCreated)))
-      .then((res) => setPosts(res));
-  };
-  fetchPosts();
+  const { posts } = usePosts();
   return (
     <div className="guest-timeline container col-span-2">
       {!posts ? (
