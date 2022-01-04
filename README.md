@@ -8,6 +8,7 @@ Live link is here: [Co-Lab](https://co-lab.vercel.app)
 
 ## Languages/Building Blocks
 
+React
 Javascript
 HTML
 CSS
